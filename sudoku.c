@@ -44,8 +44,27 @@ void print_node(Node* n){
 }
 
 int is_valid(Node* n){
-
-    return 1;
+  int filas_check[9][9] = {0};
+  int columnas_check[9][9] = {0};
+  int submatriz_check[9][9] = {0};
+  int i, j;
+  for (i = 0; i < 9; i++) {
+    for (j = 0; j < 9; j++) {
+      int num = n->sudo[i][j];
+      if (num != 0) {
+        // Si es distinto de 0, verificar que no se repita en la fila
+        int submatriz = (i / 3) * 3 + (j / 3);
+        if (filas_check[i][num - 1] == 1 || columnas_check[j][num - 1] == 1 ||
+            submatriz_check[submatriz][num - 1] == 1) {
+          return 0;
+        }
+        filas_check[i][num - 1] = 1;
+        columnas_check[j][num - 1] = 1;
+        submatriz_check[submatriz][num - 1] = 1;
+      }
+    }
+  }
+  return 1;
 }
 
 
